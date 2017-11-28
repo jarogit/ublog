@@ -67,3 +67,18 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+easy_admin:
+    site_name: 'Blog Admin'
+    entities:
+        Post:
+            class: AppBundle\Entity\Post
+            list:
+                fields: ['title', 'slug', 'date']
+            form:
+                fields:
+                    - 'title'
+                    - property: 'slug'
+                      type_options: { required: false }
+                    - 'text'
+                    - 'date'

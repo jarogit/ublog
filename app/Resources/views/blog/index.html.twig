@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}Posts{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col s12">
+        <table class="tbl_posts bordered highlight js--posts">
+            <thead>
+                <th>Title</th>
+                <th class="right-align">Publication Date</th>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr data-url="{{ path('app_post_show', {id: post.id}) }}">
+                        <td>{{ post.title }}</td>
+                        <td class="right-align">{{ post.date|date(date_format) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.js--posts tbody tr').click(function() {
+                window.location = $(this).data('url');
+            });
+        });
+    </script>
+{% endblock %}

@@ -7,6 +7,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    date_format: d.m.Y
 
 framework:
     #esi: ~
@@ -37,6 +38,10 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    paths:
+        '%kernel.project_dir%/app/Resources/views': App
+    globals:
+        date_format: '%date_format%'
 
 # Doctrine Configuration
 doctrine:
@@ -75,7 +80,7 @@ easy_admin:
             js:
                 - '/js/admin.js'
     formats:
-        date:     'd.m.Y'
+        date: '%date_format%'
     entities:
         Post:
             class: AppBundle\Entity\Post
@@ -103,3 +108,7 @@ easy_admin:
             form:
                 fields:
                     - 'name'
+
+knp_paginator:
+    template:
+        pagination: '@App/blog/pagination.html.twig'

@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="posts")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"slug"})
  */
@@ -61,7 +61,7 @@ class Post
     /**
      * @ORM\Column(type="integer")
      */
-    private $views;
+    private $views = 0;
 
     public function __construct()
     {
@@ -158,16 +158,9 @@ class Post
         return $this->published;
     }
 
-    /**
-     * Set views
-     *
-     * @param integer $views
-     *
-     * @return Post
-     */
-    public function setViews($views)
+    public function incViews(): self
     {
-        $this->views = $views;
+        $this->views++;
 
         return $this;
     }

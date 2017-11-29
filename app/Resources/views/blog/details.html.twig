@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col s12">
+        <div class="right-align">{{ post.date|date(date_format) }}</div>
+        <div class="divider"></div>
+        <div class="section">
+            <div>
+                {{ post.text|raw }}
+            </div>
+        </div>
+        <div class="right-align">{{ post.tags|join(', ') }}</div>
+        <div class="divider"></div>
+        <div class="section">
+            <a class="waves-effect waves-light btn" href="javascript:history.back()">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

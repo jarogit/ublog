@@ -1,17 +1,20 @@
 <?php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @ORM\Table(name="posts")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"slug"})
  */
 class Post
 {
-    const NUM_ITEMS = 10;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,31 +24,57 @@ class Post
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      * @Assert\Length(max=150)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank()
      */
     private $slug;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $text;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="posts_tags")
+     * @var ArrayCollection
+     */
+    private $tags;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $views;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function setTitle(string $value)
+    public function setTitle($value)
     {
         $this->title = $value;
     }
@@ -55,7 +84,7 @@ class Post
         return $this->title;
     }
 
-    public function setSlug(string $value)
+    public function setSlug($value)
     {
         $this->slug = $value;
     }
@@ -75,7 +104,7 @@ class Post
         return $this->date;
     }
 
-    public function setText(string $value)
+    public function setText($value)
     {
         $this->text = $value;
     }
@@ -85,13 +114,71 @@ class Post
         return $this->text;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function preSave()
+    public function addTag(Tag $tag): self
     {
-        if (empty($this->slug)) {
-            $this->slug = preg_replace('~\W~', '-', strtolower(trim(strip_tags($this->title))));
-        }
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    public function setPublished($published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    public function isPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     *
+     * @return Post
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 }

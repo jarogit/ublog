@@ -70,15 +70,32 @@ swiftmailer:
 
 easy_admin:
     site_name: 'Blog Admin'
+    design:
+        assets:
+            js:
+                - '/js/admin.js'
+    formats:
+        date:     'd.m.Y'
     entities:
         Post:
             class: AppBundle\Entity\Post
             list:
-                fields: ['title', 'slug', 'date']
+                fields: ['title', 'slug', 'date', 'published', 'views']
+                actions: ['-delete']
+                sort: 'date'
             form:
                 fields:
                     - 'title'
-                    - property: 'slug'
-                      type_options: { required: false }
-                    - 'text'
-                    - 'date'
+                    - { property: 'slug', help: 'if empty then will be generated automatically on title change' }
+                    - { property: 'text', type: 'ckeditor' }
+                    - 'tags'
+                    - { property: 'date', type: 'date', type_options: { widget: 'single_text' } }
+                    - 'published'
+                actions: ['-delete']
+        Tag:
+            class: AppBundle\Entity\Tag
+            list:
+                fields: ['name', 'posts']
+            form:
+                fields:
+                    - 'name'

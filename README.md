@@ -17,6 +17,8 @@ Blog application based on Symfony framework
  
  password: admin
  
+ You can use Admin area to create and edit Posts and Tags.
+ 
  ## REST API
  
  * `GET /api/post`

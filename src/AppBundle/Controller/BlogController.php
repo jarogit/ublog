@@ -19,20 +19,18 @@ class BlogController extends Controller
             ->findAll();
 
         $paginator = $this->get('knp_paginator');
-        $posts = $paginator->paginate(
-            $allPosts,
-            $request->query->getInt('page', 1),
-            2
-        );
+        $posts = $paginator->paginate($allPosts, $request->query->getInt('page', 1), 2);
 
         return $this->render('blog/index.html.twig', ['posts' => $posts]);
     }
 
     /**
-     * @Route("/post/{id}", name="app_post_show")
+     * @Route("/post/{slug}", name="app_post_show")
      */
-    public function showAction(Post $post)
+    public function showAction(Request $request, $slug)
     {
+        $post = $this->getDoctrine()->getRepository(Post::class)->findOneBySlug($slug);
+
         $post->incViews();
         $this->getDoctrine()->getManager()->flush();
 

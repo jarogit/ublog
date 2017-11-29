@@ -12,7 +12,7 @@
             </thead>
             <tbody>
                 {% for post in posts %}
-                    <tr data-url="{{ path('app_post_show', {id: post.id}) }}">
+                    <tr data-url="{{ path('app_post_show', {slug: post.slug}) }}">
                         <td>{{ post.title }}</td>
                         <td class="right-align">{{ post.date|date(date_format) }}</td>
                     </tr>

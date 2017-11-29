@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups as ApiGroups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -19,6 +20,7 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ApiGroups({"list"})
      */
     private $id;
 
@@ -26,12 +28,14 @@ class Post
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\Length(max=150)
+     * @ApiGroups({"list"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank()
+     * @ApiGroups({"list"})
      */
     private $slug;
 
@@ -43,6 +47,7 @@ class Post
 
     /**
      * @ORM\Column(type="date")
+     * @ApiGroups({"list"})
      */
     private $date;
 
@@ -55,11 +60,13 @@ class Post
 
     /**
      * @ORM\Column(type="boolean")
+     * @ApiGroups({"list"})
      */
     private $published;
 
     /**
      * @ORM\Column(type="integer")
+     * @ApiGroups({"list"})
      */
     private $views = 0;
 

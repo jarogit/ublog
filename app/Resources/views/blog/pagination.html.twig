@@ -1,5 +1,5 @@
 <ul class="pagination">
-    {% if first is defined and current != first %}
+    {% if pageCount > 1 and current != first %}
         <li class="first waves-effect">
             <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">
                 <i class="material-icons">first_page</i>

@@ -11,12 +11,18 @@
                 <th class="right-align">Publication Date</th>
             </thead>
             <tbody>
-                {% for post in posts %}
-                    <tr data-url="{{ path('app_post_show', {slug: post.slug}) }}">
-                        <td>{{ post.title }}</td>
-                        <td class="right-align">{{ post.date|date(date_format) }}</td>
+                {% if posts.count == 0 %}
+                    <tr>
+                        <td colspan="2">No data found</td>
                     </tr>
-                {% endfor %}
+                {% else %}
+                    {% for post in posts %}
+                        <tr data-url="{{ path('app_post_show', {slug: post.slug}) }}">
+                            <td>{{ post.title }}</td>
+                            <td class="right-align">{{ post.date|date(date_format) }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
 

@@ -79,14 +79,16 @@ easy_admin:
     entities:
         Post:
             class: AppBundle\Entity\Post
+            label: Posts
             list:
+                title: Posts
                 fields: ['title', 'slug', 'date', 'published', 'views']
                 actions: ['-delete']
                 sort: 'date'
             form:
                 fields:
                     - 'title'
-                    - { property: 'slug', help: 'if empty then will be generated automatically on title change' }
+                    - { property: 'slug', help: 'if empty will be generated automatically on title change' }
                     - { property: 'text', type: 'ckeditor' }
                     - 'tags'
                     - { property: 'date', type: 'date', type_options: { widget: 'single_text' } }
@@ -94,7 +96,9 @@ easy_admin:
                 actions: ['-delete']
         Tag:
             class: AppBundle\Entity\Tag
+            label: Tags
             list:
+                title: Tags
                 fields: ['name', 'posts']
             form:
                 fields:

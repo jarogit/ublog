@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
 
     $(document).ready(function() {
         $('.easyadmin.new-post #post_title, .easyadmin.edit-post #post_title').change(function() {
@@ -10,4 +10,4 @@
         })
     });
 
-}( jQuery ));
+}(jQuery));

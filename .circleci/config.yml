@@ -12,14 +12,14 @@ jobs:
 
     working_directory: ~/app
 
-    - run:
-      name: Install SSH
-      command: |
-        apt-get -yq update && \
-        apt-get -yqq install ssh
-
     steps:
-      - checkout
+      - run:
+        name: Install SSH
+        command: |
+          apt-get -yq update && \
+          apt-get -yqq install ssh
+
+        - checkout
 
       # Download and cache dependencies
       - restore_cache:

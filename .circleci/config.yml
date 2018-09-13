@@ -4,13 +4,19 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2-apache-node-browsers
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mysql:9.4
 
-    working_directory: ~/repo
+    working_directory: ~/app
+
+    - run:
+      name: Install SSH
+      command: |
+        apt-get -yq update && \
+        apt-get -yqq install ssh
 
     steps:
       - checkout
@@ -28,6 +34,6 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
-        
+
       # run tests!
       - run: phpunit

@@ -16,8 +16,8 @@ jobs:
       - run:
           name: Install SSH
           command: |
-            apt-get -yq update && \
-            apt-get -yqq install ssh
+            sudo apt-get -yq update && \
+            sudo apt-get -yqq install ssh
 
       - checkout
 

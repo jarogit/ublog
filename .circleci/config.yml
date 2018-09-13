@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - run:
-        name: Install SSH
-        command: |
-          apt-get -yq update && \
-          apt-get -yqq install ssh
+          name: Install SSH
+          command: |
+            apt-get -yq update && \
+            apt-get -yqq install ssh
 
       - checkout
 
